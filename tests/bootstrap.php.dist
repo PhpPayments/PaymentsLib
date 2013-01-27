@@ -1,0 +1,4 @@
+<?php
+require_once __DIR__.'/../lib/Payment/Utility/SplClassLoader.php';
+$loader = new \Payment\Utility\SplClassLoader('Payment', $baseDir . '/lib/');
+$loader->register();
