@@ -4,10 +4,10 @@ namespace Payment\Exception;
  * PaymentApiException
  *
  * @author Florian Krämer
- * @copyright 2012 Florian Krämer
+ * @copyright 2013 Florian Krämer
  * @license MIT
  */
-class PaymentApiException extends Exception {
+class PaymentApiException extends \Payment\Exception\PaymentException {
 
 	public $apiErrorCode = null;
 	public $apiErrorMessage = null;

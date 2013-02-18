@@ -7,7 +7,7 @@ namespace Payment\Exception;
  * @copyright 2013 Florian Krämer
  * @license MIT
  */
-class PaymentException extends Exception {
+class PaymentException extends \Exception {
 
 	protected $_attributes = null;
 
