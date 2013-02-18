@@ -1,4 +1,4 @@
-# CakePHP Payments Plugin #
+# PHP Payments Library #
 
 http://github.com/PhpPayments/PaymentsLib
 
@@ -128,9 +128,9 @@ For recurring payments
 
 Custom fields:
 
-* custom1
-* custom2
-* custom3
+* custom_1
+* custom_2
+* custom_3
 * ...
 
 ## Logging
@@ -145,11 +145,23 @@ To pass your custom log object just add it to the config of the processor:
 	$Processor = new \Payment\Processor\YourProcessor\Processor(array(
 		'logObject' => $yourLogger);
 
-## cURL Wrapper
+## Http Request Adapter
 
-This plugin also comes with a Curl class to wrap the native php cURL functionality in object oriented fashion.
+Many payment processors require the use of the http protocol. The payments lib comes with an adapter that can be used to adept any kind of http client lib.
 
-Please use it instead of any other 3rd party libs in your processors.
+The payments lib itself comes with a very basic cURL class that can be use by default.
+
+	new Processor(array('httpRequestObject' => $YourObject));
+
+or
+
+	$Processor = new Processor(array('httpRequestObject' => $YourObject));
+	$processor->setHttpRequestObject($YourObject);
+
+and by passing a string
+
+	$Processor = new Processor(array('httpRequestObject' => $YourObject));
+	$processor->setHttpRequestObject('\Payment\Network\Http\Curl');
 
 ## Example of working with a processor
 
