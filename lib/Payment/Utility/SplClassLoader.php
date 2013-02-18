@@ -20,19 +20,38 @@ namespace Payment\Utility;
  * @link https://gist.github.com/221634
  */
 class SplClassLoader {
+
+	/**
+	 * @var string
+	 */
 	private $_fileExtension = '.php';
+
+	/**
+	 * @var string
+	 */
 	private $_namespace;
+
+	/**
+	 * @var string
+	 */
 	private $_includePath;
+
+	/**
+	 * @var string
+	 */
 	private $_namespaceSeparator = '\\';
 
 	/**
 	 * Creates a new <tt>SplClassLoader</tt> that loads classes of the
 	 * specified namespace.
-	 * 
-	 * @param string $ns The namespace to use.
+	 *
+	 * @param string $namespace The namespace to use.
+	 * @param null $includePath
+	 * @internal param string $includepath
+	 * @return SplClassLoader
 	 */
-	public function __construct($ns = null, $includePath = null) {
-		$this->_namespace = $ns;
+	public function __construct($namespace = null, $includePath = null) {
+		$this->_namespace = $namespace;
 		$this->_includePath = $includePath;
 	}
 
@@ -124,4 +143,5 @@ class SplClassLoader {
 			require ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
 		}
 	}
+
 }

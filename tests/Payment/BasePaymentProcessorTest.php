@@ -1,6 +1,6 @@
 <?php
 /**
- * BasePaymentProcessor
+ * BasePaymentProcessorTest
  *
  * @author Florian Krämer
  * @copyright 2013 Florian Krämer

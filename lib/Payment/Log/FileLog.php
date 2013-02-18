@@ -21,6 +21,7 @@ class FileLog implements LogInterface {
 	 * Constructor
 	 *
 	 * @param array $options
+	 * @throws \RuntimeException
 	 * @return \Payment\Log\FileLog
 	 */
 	public function __construct(array $options = array()) {
@@ -32,11 +33,11 @@ class FileLog implements LogInterface {
 		}
 
 		if (!is_dir($this->logDir)) {
-			throw new \RuntimeException('Log directory does not exist!');
+			throw new \RuntimeException(sprintf('Log directory %s does not exist!', $this->logDir));
 		}
 
 		if (!is_writeable($this->logDir)) {
-			throw new \RuntimeException('Log directory is not writeable!');
+			throw new \RuntimeException(sprintf('Log directory %s is not writeable!', $this->logDir));
 		}
 	}
 

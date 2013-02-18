@@ -1,10 +1,24 @@
 <?php
 namespace Payment;
+use \Payment\Exception\PaymentApiException;
+
 /**
  * PaymentApiResponse
  *
+ * This class does *not* implement any kind of transport protocol like http POST
+ * or GET. The only purpose of this class to construct a standard object to work
+ * with based on the response of any API and any protocol.
+ *
+ * If you received XML via post pass it to the constructor as string. If you
+ * received XML as a file, read it and pass it as string to your constructor.
+ * If you got already a SimpleXml object pass it on to the constructor.
+ *
+ * You must implement the _parseResponse() method that must parse the raw API
+ * response and set the protected properties of this class if they're valid
+ * for the API
+ *
  * @author Florian Krämer
- * @copyright 2012 Florian Krämer
+ * @copyright 2013 Florian Krämer
  * @license MIT
  */
 abstract class ApiResponse {
@@ -50,7 +64,7 @@ abstract class ApiResponse {
  * @param string|array|object
  * @param array $options
  * @return \Payment\ApiResponse
- * @throws \RuntimeException
+ * @throws \Payment\Exception\PaymentApiException
  */
 	public function __construct($response, $options = array()) {
 		$this->_options = $options;
@@ -58,7 +72,7 @@ abstract class ApiResponse {
 		$this->_parseResponse();
 
 		if (is_null($this->_response)) {
-			throw new \RuntimeException('PaymentApiResponse::_parseResponse() could not or did not parse the response!');
+			throw new \Payment\Exception\PaymentApiException('PaymentApiResponse::_parseResponse() could not or did not parse the response!');
 		}
 	}
 

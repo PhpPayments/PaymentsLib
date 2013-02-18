@@ -35,7 +35,7 @@ class PaymentStatus {
 	const ERROR = 'error';
 
 	/**
-	 * Denied
+	 * Denied for example when there are restrictions on the amount of transferable money or other constraints
 	 */
 	const DENIED = 'denied';
 
