@@ -23,49 +23,49 @@ use \Payment\Exception\PaymentApiException;
  */
 abstract class ApiResponse {
 
-/**
- * Status, must be one of the PaymentStatus class constants
- *
- * @var string
- */
+	/**
+	 * Status, must be one of the PaymentStatus class constants
+	 *
+	 * @var string
+	 */
 	protected $_status = null;
 
-/**
- * Raw response of a payment processor
- *
- * @var string|array|object
- */
+	/**
+	 * Raw response of a payment processor
+	 *
+	 * @var string|array|object
+	 */
 	protected $_rawResponse = null;
 
-/**
- * Response of a payment processor, must be an array
- *
- * @var array
- */
+	/**
+	 * Response of a payment processor, must be an array
+	 *
+	 * @var array
+	 */
 	protected $_response = null;
 
-/**
- * Transaction Id for processors that return one
- *
- * @var mixed
- */
+	/**
+	 * Transaction Id for processors that return one
+	 *
+	 * @var mixed
+	 */
 	protected $_transactionId = null;
 
-/**
- * Subscription Id for processors that implement subscriptions
- *
- * @var mixed
- */
+	/**
+	 * Subscription Id for processors that implement subscriptions
+	 *
+	 * @var mixed
+	 */
 	protected $_subscriptionId = null;
 
-/**
- * Constructor
- *
- * @param string|array|object
- * @param array $options
- * @return \Payment\ApiResponse
- * @throws \Payment\Exception\PaymentApiException
- */
+	/**
+	 * Constructor
+	 *
+	 * @param string|array|object
+	 * @param array $options
+	 * @return \Payment\ApiResponse
+	 * @throws \Payment\Exception\PaymentApiException
+	 */
 	public function __construct($response, $options = array()) {
 		$this->_options = $options;
 		$this->_rawResponse = $response;
@@ -76,68 +76,76 @@ abstract class ApiResponse {
 		}
 	}
 
-/**
- * getTransactionId
- *
- * @return string
- */
+	/**
+	 * getTransactionId
+	 *
+	 * @return string
+	 */
 	public function transactionId() {
 		return $this->_transactionId;
 	}
 
-/**
- * getSubscriptionId
- *
- * @return string
- */
+	/**
+	 * getSubscriptionId
+	 *
+	 * @return string
+	 */
 	public function subscriptionId() {
 		return $this->_subscriptionId;
 	}
 
-/**
- * Get the raw API response
- *
- * @return mixed
- */
+	/**
+	 * Get the raw API response
+	 *
+	 * @return mixed
+	 */
 	public function rawResponse() {
 		return $this->_rawResponse;
 	}
 
-/**
- * Get the status
- *
- * @return mixed
- */
+	/**
+	 * Get the status
+	 *
+	 * @return mixed
+	 */
 	public function status() {
 		return $this->_status;
 	}
 
-/**
- * Get the raw API response
- *
- * @return mixed
- */
+	/**
+	 * Get the raw API response
+	 *
+	 * @return mixed
+	 */
 	public function response() {
 		return $this->_response;
 	}
 
-/**
- * Magic getter
- *
- * @return mixed
- */
+	/**
+	 *
+	 */
+	public function errors() {
+		return $this->_errors;
+	}
+
+	/**
+	 * Magic getter
+	 *
+	 * @param string $name
+	 * @return mixed
+	 */
 	public function __get($name) {
 		if (isset($this->_{$name})) {
 			return $this->_{$name};
 		}
 	}
 
-/**
- * This method must parse the raw response and set the protected properties of
- * this class based on the response
- *
- * @return void
- */
+	/**
+	 * This method must parse the raw response and set the protected properties of
+	 * this class based on the response
+	 *
+	 * @return void
+	 */
 	protected abstract function _parseResponse();
 
 }
