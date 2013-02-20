@@ -2,7 +2,7 @@
 
 http://github.com/PhpPayments/PaymentsLib
 
-This plugin is thought to provide a generic API for different payment processors.
+This library is thought to provide a generic API for different payment processors. Every processor compatible with this library can be used in the same way, no need to learn something about yet another payment provider.
 
 The idea is to wrap every payment processor into the same interface so that it becomes immediately usable by every developer who is familiar with this API, removing the need to learn all the different payment providers and their specific APIs and SDKs.
 
@@ -13,18 +13,20 @@ Contributions are welcome!
 ## Requirements
 
  * php 5.3 or greater
+ * CURL http://php.net/manual/en/book.curl.php
 
-This plugin is just an API and set of interfaces it does not contain any processors, you'll have to pick and add processors for your app.
+This lib is just an API and set of interfaces it does not contain any processors, you'll have to pick and add processors for your app.
 
 ### List of Open Source Payment Processors using this API
 
 Please create a ticket on github or send an email if you want to get your processor on this list.
 
  * Sofort.de (LGPL License) - http://github.com/PhpPayments/Sofort
+ * AuthorizeNet (AIM, ARB) (LGPL License) - http://github.com/PhpPayments/AuthorizeNet
 
 ### List of Commercial Payment Processors using this API
 
-Contact us to get your plugin reviewed and added to this list if it matches the acceptance criteria. A good processor has proper value validation, error handling and logging.
+Contact us to get your library reviewed and added to this list if it matches the acceptance criteria. A good processor has proper value validation, error handling and logging.
 
 There are no commercial processors available yet.
 
@@ -35,7 +37,7 @@ All of the following steps are considered as required to write a proper and as g
 * Your processor has to extend BasePaymentProcessor and use the interfaces as needed
 * Your processor must not have any application specific or dependant code in it
 * You have to use set() to set values for the API / processor and validateValues() to check if all required values for a call are present
-* You have to use the Exceptions from the Payments plugin to encapsulate payment gateway API errors and payment processor issues
+* You have to use the Exceptions from the Payments library to encapsulate payment gateway API errors and payment processor issues
 * You have to map the payment statuses from the foreign APIs to the constants of the PaymentStatus class and return them instead the foreign statuses
 * Your processor should not have hard dependencies on anything else if possible
 * Use the PaymentApiLog to log payment related messages
@@ -135,7 +137,7 @@ Custom fields:
 
 ## Logging
 
-The payments lib comes with a very basic file logger to log errors. You can inject whatever log object from your app or framework you want, the only requirement is that you'll have to wrap it in a class that will implement the Paylemt\Log\LogInterface.
+The payments lib comes with a very basic file logger to log errors. You can inject whatever log object from your app or framework you want, the only requirement is that you'll have to wrap it in a class that will implement the Payment\Log\LogInterface.
 
 It is required to implement a write() method that takes a message (can by any data type) and an optional log type, default is "debug".
 
