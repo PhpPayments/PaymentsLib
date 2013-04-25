@@ -3,7 +3,10 @@ namespace Payment;
 use \Payment\Exception\MissingFieldException;
 
 /**
- * BasePaymentProcessor
+ * PaymentProcessor
+ *
+ * Every payment processor must extend this base class. It provides all the
+ * essential functionality of the idea behind this generic payment interface.
  *
  * @author Florian Krämer
  * @copyright 2013 Florian Krämer
@@ -83,6 +86,9 @@ abstract class PaymentProcessor {
 	/**
 	 * List of required configuration fields
 	 *
+	 * Every field listed in here must be present in the configuration array
+	 * if not present an MissingConfigException will be thrown
+	 *
 	 * @var array
 	 */
 	protected $_configFields = array();
@@ -90,7 +96,9 @@ abstract class PaymentProcessor {
 	/**
 	 * Log object instance
 	 *
-	 * @var object
+	 * If false no logging will be done at all.
+	 *
+	 * @var LogInterface|boolean
 	 */
 	protected $_log = false;
 
@@ -111,25 +119,26 @@ abstract class PaymentProcessor {
 	/**
 	 * Constructor
 	 *
-	 * @param PaymentProcessorConfig $config
+	 * @param array PaymentProcessorConfig $config
 	 * @param array $options
-	 * @return BasePaymentProcessor
-	 * @throws PaymentProcessorException
+	 * @throws Exception\PaymentProcessorException
+	 * @return \Payment\PaymentProcessor
 	 */
 	public function __construct($config, array $options = array()) {
 		if (!$this->configure($config)) {
-			throw new PaymentProcessorException(__('Failed to configure %s!', get_class($this)));
+			throw new \Payment\Exception\PaymentProcessorException(__('Failed to configure %s!', get_class($this)));
 		}
 
 		if (!$this->_initialize($options)) {
-			throw new PaymentProcessorException(__('Failed to initialize %s!', get_class($this)));
+			throw new \Payment\Exception\PaymentProcessorException(__('Failed to initialize %s!', get_class($this)));
 		}
 
 		$this->_initializeLogging($options);
-	}
 
-	final public function setHttpRequestObject(\Payment\Network\Http\HttpRequestAdapter $httpRequestObject) {
-		$this->__httpRequestObject = $httpRequestObject;
+		if (!isset($config['httpAdaper'])) {
+			$config['httpAdaper'];
+		}
+		$this->_HttpClient = new \Payment\Network\Http\Client($config['httpAdaper']);
 	}
 
 	/**

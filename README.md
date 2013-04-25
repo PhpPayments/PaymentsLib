@@ -6,7 +6,9 @@ This library is thought to provide a generic API for different payment processor
 
 The idea is to wrap every payment processor into the same interface so that it becomes immediately usable by every developer who is familiar with this API, removing the need to learn all the different payment providers and their specific APIs and SDKs.
 
-The processors should not depend on anything else than this API and be useable within any application, even shell scripts.
+The processors should not depend on anything else than this API and be usable within any application, even shell scripts.
+
+The library comes with a skinny http client implementation that supports adapters and also a skinny log interface, no other libraries or dependencies needed but you can inject your customized logger or http client adapter!
 
 Contributions are welcome!
 
@@ -15,20 +17,16 @@ Contributions are welcome!
  * php 5.3 or greater
  * CURL http://php.net/manual/en/book.curl.php
 
+The CURL requirement will be a hard requirement anymore as soon as there is a stream adapter for the http client.
+
 This lib is just an API and set of interfaces it does not contain any processors, you'll have to pick and add processors for your app.
 
-### List of Open Source Payment Processors using this API
+### List of Payment Processors using this API
 
-Please create a ticket on github or send an email if you want to get your processor on this list.
+Please create a ticket on github or send an email if you want to get your processor on this list. Your library will be reviewed and added to this list if it matches the acceptance criteria. A good processor has proper value validation, error handling and logging.
 
  * Sofort.de (LGPL License) - http://github.com/PhpPayments/Sofort
  * AuthorizeNet (AIM, ARB) (LGPL License) - http://github.com/PhpPayments/AuthorizeNet
-
-### List of Commercial Payment Processors using this API
-
-Contact us to get your library reviewed and added to this list if it matches the acceptance criteria. A good processor has proper value validation, error handling and logging.
-
-There are no commercial processors available yet.
 
 ## Implementing your processor based on this API
 
@@ -147,23 +145,17 @@ To pass your custom log object just add it to the config of the processor:
 	$Processor = new \Payment\Processor\YourProcessor\Processor(array(
 		'logObject' => $yourLogger);
 
-## Http Request Adapter
+## Http Client Adapter
 
-Many payment processors require the use of the http protocol. The payments lib comes with an adapter that can be used to adept any kind of http client lib.
+Many payment processors require the use of the http protocol. The payments lib comes with an adapter that can be used to adept any kind of http client library you want but does not require any other library.
 
 The payments lib itself comes with a very basic cURL class that can be use by default.
 
-	new Processor(array('httpRequestObject' => $YourObject));
+	new Processor(array('httpClient' => 'YourAdapterName));
 
-or
+Your custom http adapater object, must implement the Request object and return Response objects.
 
-	$Processor = new Processor(array('httpRequestObject' => $YourObject));
-	$processor->setHttpRequestObject($YourObject);
-
-and by passing a string
-
-	$Processor = new Processor(array('httpRequestObject' => $YourObject));
-	$processor->setHttpRequestObject('\Payment\Network\Http\Curl');
+	new Processor(array('httpClient' => $YourCustomObject));
 
 ## Example of working with a processor
 
@@ -184,6 +176,16 @@ Note that different processors might require different fields.
 Call the pay method.
 
 	$Processor->pay(15.99);
+
+## Coding Conventions
+
+Some basic coding conventions
+
+* Tabs for indention
+* Protected methods must be prefixed with _
+* Private methods must be prefixed with __
+
+Everything else follows PSR1.
 
 ## Support
 

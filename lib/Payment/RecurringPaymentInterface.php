@@ -14,6 +14,7 @@ interface RecurringPaymentInterface {
 	 *
 	 * @param string
 	 * @param array
+	 * @return \Payment\ApiResponse
 	 */
 	public function cancelSubscription($transactionReference, array $options = array());
 
@@ -21,7 +22,7 @@ interface RecurringPaymentInterface {
 	 * Creates a new subscription
 	 *
 	 * @param array $options
-	 * @return
+	 * @return \Payment\ApiResponse
 	 */
 	public function createSubscription($options = array());
 
@@ -30,6 +31,7 @@ interface RecurringPaymentInterface {
 	 *
 	 * @param string
 	 * @param array
+	 * @return \Payment\ApiResponse
 	 */
 	public function updateSubscription($transactionReference, $options = array());
 

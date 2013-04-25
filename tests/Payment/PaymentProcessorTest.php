@@ -6,7 +6,7 @@
  * @copyright 2013 Florian Krämer
  * @license MIT
  */
-class TestBasePaymentProcessor extends \Payment\BasePaymentProcessor {
+class TestPaymentProcessor extends \Payment\PaymentProcessor {
 
 	public function pay($amount, array $options = array()) {
 
@@ -29,7 +29,7 @@ class TestBasePaymentProcessor extends \Payment\BasePaymentProcessor {
 class BasePaymentProcessorTest extends \PHPUnit_Framework_TestCase {
 
 	public function testField() {
-		$Processor = new \TestBasePaymentProcessor(array());
+		$Processor = new \TestPaymentProcessor(array());
 		$Processor->field('test');
 	}
 

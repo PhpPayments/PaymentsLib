@@ -12,12 +12,14 @@ interface CreditCardPaymentInterface {
 	/**
 	 * Authorize
 	 *
+	 * @return \Payment\ApiResponse
 	 */
 	public function authorize();
 
 	/**
 	 * Capture
 	 *
+	 * @return \Payment\ApiResponse
 	 */
 	public function capture();
 
@@ -25,6 +27,7 @@ interface CreditCardPaymentInterface {
 	 * Void
 	 *
 	 * @param mixed $transactionId
+	 * @return \Payment\ApiResponse
 	 */
 	public function void($transactionId);
 
@@ -32,6 +35,7 @@ interface CreditCardPaymentInterface {
 	 * echeck
 	 *
 	 * @param mixed $transactionId
+	 * @return \Payment\ApiResponse
 	 */
 	public function echeck($transactionId);
 

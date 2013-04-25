@@ -38,7 +38,8 @@ abstract class ApiResponse {
 	protected $_rawResponse = null;
 
 	/**
-	 * Response of a payment processor, must be an array
+	 * Parsed response of a payment processor, must be an array and must contain
+	 * all data coming from the API
 	 *
 	 * @var array
 	 */
@@ -47,14 +48,14 @@ abstract class ApiResponse {
 	/**
 	 * Transaction Id for processors that return one
 	 *
-	 * @var mixed
+	 * @var null|integer|string
 	 */
 	protected $_transactionId = null;
 
 	/**
 	 * Subscription Id for processors that implement subscriptions
 	 *
-	 * @var mixed
+	 * @var null|integer|string
 	 */
 	protected $_subscriptionId = null;
 
