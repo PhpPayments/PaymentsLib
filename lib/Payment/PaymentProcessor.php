@@ -126,19 +126,30 @@ abstract class PaymentProcessor {
 	 */
 	public function __construct($config, array $options = array()) {
 		if (!$this->configure($config)) {
-			throw new \Payment\Exception\PaymentProcessorException(__('Failed to configure %s!', get_class($this)));
+			throw new \Payment\Exception\PaymentProcessorException(sprintf('Failed to configure %s!', get_class($this)));
 		}
 
 		if (!$this->_initialize($options)) {
-			throw new \Payment\Exception\PaymentProcessorException(__('Failed to initialize %s!', get_class($this)));
+			throw new \Payment\Exception\PaymentProcessorException(sprintf('Failed to initialize %s!', get_class($this)));
 		}
 
 		$this->_initializeLogging($options);
 
-		if (!isset($config['httpAdaper'])) {
-			$config['httpAdaper'];
+		if (!isset($config['httpAdapter'])) {
+			$config['httpAdapter'] = 'Curl';
 		}
-		$this->_HttpClient = new \Payment\Network\Http\Client($config['httpAdaper']);
+
+		$urls = array('cancelUrl', 'returnUrl', 'callbackUrl', 'finishUrl');
+		foreach ($urls as $url) {
+			if (isset($config[$url])) {
+				if (!preg_match("#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie", $config[$url])) {
+					throw new \Payment\Exception\PaymentProcessorException(sprintf('Invalid URL "%s" for the configuration key "%s"!', $config[$url], $url));
+				}
+				$this->{$url} = $config[$url];
+			}
+		}
+
+		$this->_HttpClient = new \Payment\Network\Http\Client($config['httpAdapter']);
 	}
 
 	/**
@@ -245,7 +256,7 @@ abstract class PaymentProcessor {
 
 		if (!isset($this->_fields[$field])) {
 			if ($options['required'] === true) {
-				throw new \Payment\Exception\MissingFieldException(__('Required value %s is not set!', $field));
+				throw new \Payment\Exception\MissingFieldException(sprintf('Required value %s is not set!', $field));
 			}
 
 			if ($options['default'] !== null) {
@@ -272,7 +283,7 @@ abstract class PaymentProcessor {
 			foreach($this->_fields[$action] as $field => $options) {
 				if (isset($options['required']) && $options['required'] === true) {
 					if (!isset($this->_fields[$field])) {
-						throw new \Payment\Exception\PaymentProcessorException(__('Required value %s is not set!', $field));
+						throw new \Payment\Exception\PaymentProcessorException(sprintf('Required value %s is not set!', $field));
 					}
 				}
 
@@ -295,7 +306,7 @@ abstract class PaymentProcessor {
 					}
 
 					if ($typeFound === false) {
-						throw new \Payment\Exception\PaymentProcessorException(__('Invalid data type for value %s!', $field));
+						throw new \Payment\Exception\PaymentProcessorException(sprintf('Invalid data type for value %s!', $field));
 					}
 				}
 			}
@@ -399,7 +410,7 @@ abstract class PaymentProcessor {
 	 * @return bool|void
 	 */
 	public function log($message, $type = null) {
-		$type = 'payments-' . Inflector::underscore(__CLASS__) . '-' . $type;
+		$type = 'payments-' . __CLASS__ . '-' . $type;
 		return $this->_log->write($message, $type);
 	}
 

@@ -55,6 +55,7 @@ class FileLog implements LogInterface {
 
 		$datePrefix = date('Y-m-d H:i:s') . ': ' . "\n";
 		$file = $type . '.log';
+		$file = str_replace(DIRECTORY_SEPARATOR, '-', $file);
 
 		$handle = fopen($this->logDir . $file, 'a+');
 		fwrite($handle, $datePrefix);

@@ -80,7 +80,8 @@ class Client {
 		if ($config === null) {
 			return $this->_config;
 		}
-		$this->_config = array_merge($this->_config, $config);
+
+		//$this->_config = array_merge($this->_config, $config);
 		return $this;
 	}
 

@@ -1,5 +1,5 @@
 <?php
-namespace \Payment\Exception;
+namespace Payment\Exception;
 /**
  * MissingConfigException
  *

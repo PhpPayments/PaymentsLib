@@ -1,5 +1,5 @@
 <?php
-namespace Payments;
+namespace Payment;
 /**
  * PaymentStatus
  *
