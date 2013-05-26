@@ -11,4 +11,7 @@ namespace Payment\Exception;
  */
 class UnsupportedActionException extends \Payment\Exception\PaymentException {
 
+	const NOT_SUPPORTED = 0;
+	const NOT_IMPLEMENTED = 1;
+
 }

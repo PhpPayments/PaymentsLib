@@ -103,6 +103,13 @@ abstract class PaymentProcessor {
 	protected $_log = false;
 
 	/**
+	 * Http Client
+	 *
+	 * @var HttpClient
+	 */
+	protected $_HttpClient = null;
+
+	/**
 	 * Internal Payment API Version
 	 *
 	 * Can be used for checks to keep a processor compatible to different versions
@@ -110,11 +117,6 @@ abstract class PaymentProcessor {
 	 * @var string
 	 */
 	private $__apiVersion = '1.0';
-
-	/**
-	 *
-	 */
-	private $__httpRequestObject = null;
 
 	/**
 	 * Constructor
@@ -125,7 +127,7 @@ abstract class PaymentProcessor {
 	 * @return \Payment\PaymentProcessor
 	 */
 	public function __construct($config, array $options = array()) {
-		if (!$this->configure($config)) {
+		if (!$this->_configure($config)) {
 			throw new \Payment\Exception\PaymentProcessorException(sprintf('Failed to configure %s!', get_class($this)));
 		}
 
@@ -134,22 +136,6 @@ abstract class PaymentProcessor {
 		}
 
 		$this->_initializeLogging($options);
-
-		if (!isset($config['httpAdapter'])) {
-			$config['httpAdapter'] = 'Curl';
-		}
-
-		$urls = array('cancelUrl', 'returnUrl', 'callbackUrl', 'finishUrl');
-		foreach ($urls as $url) {
-			if (isset($config[$url])) {
-				if (!preg_match("#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie", $config[$url])) {
-					throw new \Payment\Exception\PaymentProcessorException(sprintf('Invalid URL "%s" for the configuration key "%s"!', $config[$url], $url));
-				}
-				$this->{$url} = $config[$url];
-			}
-		}
-
-		$this->_HttpClient = new \Payment\Network\Http\Client($config['httpAdapter']);
 	}
 
 	/**
@@ -347,6 +333,8 @@ abstract class PaymentProcessor {
 	 * @return void
 	 */
 	protected function _initialize(array $options) {
+		$this->_sandboxMode = $this->config['sandbox'];
+		$this->_HttpClient = new \Payment\Network\Http\Client($this->config['httpAdapter']);
 		return true;
 	}
 
@@ -376,16 +364,45 @@ abstract class PaymentProcessor {
 	/**
 	 * Sets configuration data, override it as needed
 	 *
+	 * - sandbox
+	 * - log
+	 * - httpAdapter
+	 * - cancelUrl
+	 * - returnUrl
+	 * - callbackUrl
+	 * - finishUrl
+	 *
 	 * PaymentProcessorConfig array $config
 	 * @internal param bool $merge
 	 * @param array $config
 	 * @return void
+	 * @throws \Payment\Exception\PaymentProcessorException
 	 */
-	public function configure(array $config = array()) {
+	protected function _configure(array $config = []) {
 		$this->_validateConfig($config);
 
-		if (isset($config['httpRequestObject'])) {
-			$this->setHttpRequestObject($config['httpRequestObject']);
+		if (!isset($config['sandbox'])) {
+			$config['sandbox'] = false;
+		} else {
+			$config['sandbox'] = (bool) $config['sandbox'];
+		}
+
+		if (!isset($config['httpAdapter'])) {
+			$config['httpAdapter'] = 'Curl';
+		}
+
+		if (!isset($config['log'])) {
+			$config['log'] = 'File';
+		}
+
+		$urls = array('cancelUrl', 'returnUrl', 'callbackUrl', 'finishUrl');
+		foreach ($urls as $url) {
+			if (isset($config[$url])) {
+				if (!preg_match("#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie", $config[$url])) {
+					throw new \Payment\Exception\PaymentProcessorException(sprintf('Invalid URL "%s" for the configuration key "%s"!', $config[$url], $url));
+				}
+				$this->{$url} = $config[$url];
+			}
 		}
 
 		$this->config = $config;
@@ -410,7 +427,7 @@ abstract class PaymentProcessor {
 	 * @return bool|void
 	 */
 	public function log($message, $type = null) {
-		$type = 'payments-' . __CLASS__ . '-' . $type;
+		$type = get_class($this) . '_' . $type;
 		return $this->_log->write($message, $type);
 	}
 

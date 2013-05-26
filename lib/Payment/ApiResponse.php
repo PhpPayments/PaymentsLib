@@ -67,13 +67,17 @@ abstract class ApiResponse {
 	 * @return \Payment\ApiResponse
 	 * @throws \Payment\Exception\PaymentApiException
 	 */
-	public function __construct($response, $options = array()) {
+	public function __construct($response = null, $options = array()) {
 		$this->_options = $options;
 		$this->_rawResponse = $response;
 		$this->_parseResponse();
 
 		if (is_null($this->_response)) {
 			throw new \Payment\Exception\PaymentApiException('PaymentApiResponse::_parseResponse() could not or did not parse the response!');
+		}
+
+		if (is_null($this->_status)) {
+			throw new \Payment\Exception\PaymentApiException('PaymentApiResponse: Could not set a status!');
 		}
 	}
 

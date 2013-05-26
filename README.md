@@ -112,6 +112,7 @@ For Credit Card processors
 * card_number
 * card_code
 * card_holder
+* card_date - Format: YYYY-MM
 * card_month - Expiration date month
 * card_year - Expiration date year
 
