@@ -47,7 +47,7 @@ Contact us to get your processor reviewed and added to the processor list if it 
 All Payment processors must follow this convention for configuration data
 
 	'SomePaymentProcessor' => array(
-		'sandboxMode' => false,
+		'sandbox' => false,
 		'default' => array(
 			'apiKey' => '11223:123456:h25lh252525hlhadslgh2362l6h2lsfg'
 			'apiId' => '151611574',

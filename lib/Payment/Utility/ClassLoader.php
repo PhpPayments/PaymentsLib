@@ -1,14 +1,14 @@
 <?php
 namespace Payment\Utility;
 /**
- * SplClassLoader implementation that implements the technical interoperability
+ * ClassLoader implementation that implements the technical interoperability
  * standards for PHP 5.3 namespaces and class names.
  *
  * http://groups.google.com/group/php-standards/web/final-proposal
  *
  *	 // Example which loads classes for the Doctrine Common package in the
  *	 // Doctrine\Common namespace.
- *	 $classLoader = new SplClassLoader('Doctrine\Common', '/path/to/doctrine');
+ *	 $classLoader = new ClassLoader('Doctrine\Common', '/path/to/doctrine');
  *	 $classLoader->register();
  *
  * @author Jonathan H. Wage <jonwage@gmail.com>
@@ -19,7 +19,7 @@ namespace Payment\Utility;
  * @author Florian Krämer <florian.kraemer@kreative-design.net>
  * @link https://gist.github.com/221634
  */
-class SplClassLoader {
+class ClassLoader {
 
 	/**
 	 * @var string
@@ -42,13 +42,13 @@ class SplClassLoader {
 	private $_namespaceSeparator = '\\';
 
 	/**
-	 * Creates a new <tt>SplClassLoader</tt> that loads classes of the
+	 * Creates a new <tt>ClassLoader</tt> that loads classes of the
 	 * specified namespace.
 	 *
 	 * @param string $namespace The namespace to use.
 	 * @param null $includePath
 	 * @internal param string $includepath
-	 * @return SplClassLoader
+	 * @return ClassLoader
 	 */
 	public function __construct($namespace = null, $includePath = null) {
 		$this->_namespace = $namespace;
