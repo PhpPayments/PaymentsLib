@@ -50,7 +50,7 @@ class FileLog implements LogInterface {
 	 */
 	public function write($message, $type = 'debug') {
 		if (!is_string($message)) {
-			$message = var_dump($message);
+			$message = var_export($message, true);
 		}
 
 		$datePrefix = date('Y-m-d H:i:s') . ': ' . "\n";
