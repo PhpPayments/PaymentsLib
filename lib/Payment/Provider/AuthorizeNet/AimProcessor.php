@@ -13,8 +13,14 @@ namespace Payment\Provider\AuthorizeNet;
  */
 class AimProcessor extends \Payment\PaymentProcessor implements \Payment\RecurringPaymentInterface {
 
+	/**
+	 * AimApi
+	 */
 	public $AimApi = null;
 
+	/**
+	 * ArbApi
+	 */
 	public $ArbApi = null;
 
 	/**
@@ -120,7 +126,7 @@ class AimProcessor extends \Payment\PaymentProcessor implements \Payment\Recurri
 	 *
 	 */
 	public function createSubscription($options = array()) {
-		$Subscription = new AuthorizeNet_Subscription();
+		$Subscription = new \AuthorizeNet_Subscription();
 		$Subscription->amount = $this->field('amount');
 		$Subscription->startDate = $this->field('recurring_start_date', array('default' => date('Y-m-d')));
 		$Subscription->trialAmount = $this->field('recurring_trial_amount', array('default' => 0.00));
@@ -132,7 +138,7 @@ class AimProcessor extends \Payment\PaymentProcessor implements \Payment\Recurri
 		$Subscription->creditCardCardNumber = $this->field('card_number');
 		$Subscription->creditCardExpirationDate = $this->field('card_expiration_date');
 
-		$this->ArbApi = new AuthorizeNetARB();
+		$this->ArbApi = new \AuthorizeNetARB();
 		$result = $this->ArbApi->createSubscription($Subscription);
 	}
 
@@ -140,7 +146,7 @@ class AimProcessor extends \Payment\PaymentProcessor implements \Payment\Recurri
 	 *
 	 */
 	public function cancelSubscription($paymentReference, array $options = array()) {
-		$this->ArbApi = new AuthorizeNetARB();
+		$this->ArbApi = new \AuthorizeNetARB();
 		$result = $this->ArbApi->cancelSubscription($paymentReference);
 	}
 
@@ -148,9 +154,9 @@ class AimProcessor extends \Payment\PaymentProcessor implements \Payment\Recurri
 	 *
 	 */
 	public function updateSubscription($paymentReference, $options = array()) {
-		$Subscription =  new AuthorizeNet_Subscription();
+		$Subscription =  new \AuthorizeNet_Subscription();
 
-		$this->ArbApi = new AuthorizeNetARB();
+		$this->ArbApi = new \AuthorizeNetARB();
 		$result = $this->ArbApi->cancelSubscription($paymentReference);
 	}
 
@@ -162,7 +168,7 @@ class AimProcessor extends \Payment\PaymentProcessor implements \Payment\Recurri
 	 * This method should return a payment status
 	 */
 	public function notificationCallback(array $options = array()) {
-		// TODO: Implement notificationCallback() method.
+		return new \Payment\Provider\AuthorizeNet\SilentPostResponse();
 	}
 
 	/**

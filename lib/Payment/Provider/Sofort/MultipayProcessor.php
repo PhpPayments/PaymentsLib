@@ -132,19 +132,19 @@ class MultiPayProcessor extends \Payment\PaymentProcessor {
 		$this->set('payment_reference', $paymentReference);
 		$this->validateFields('refund');
 
-		$sofort = new SofortLib_Refund($this->config['apiKey']);
+		$Sofort = new SofortLib_Refund($this->config['apiKey']);
 
-		$sofort->addRefund(
+		$Sofort->addRefund(
 			$this->_fields['payment_reference'],
 			$this->_fields['amount'],
 			$this->_fields['comment']);
 
-		$sofort->setSenderAccount(
+		$Sofort->setSenderAccount(
 			$this->_fields['sender_account_bic'],
 			$this->_fields['sender_account_iban'],
 			$this->_fields['sender_account_holder']);
 
-		$result = $sofort->sendRequest();
+		return new \Payment\Provider\Sofort\ApiResponse($Sofort->sendRequest());
 	}
 
 }

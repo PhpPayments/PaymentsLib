@@ -19,13 +19,11 @@ Contributions are welcome!
 
 The CURL requirement will be a hard requirement anymore as soon as there is a stream adapter for the http client.
 
-This lib is just an API and set of interfaces it does not contain any processors, you'll have to pick and add processors for your app.
-
-### List of Payment Processors using this API
+### List of Payment Processors included
 
 Please create a ticket on github or send an email if you want to get your processor on this list. Your library will be reviewed and added to this list if it matches the acceptance criteria. A good processor has proper value validation, error handling and logging.
 
- * Sofort.de (LGPL License) - http://github.com/PhpPayments/Sofort
+ * Sofort.de (Multipay) (LGPL License) - http://github.com/PhpPayments/Sofort
  * AuthorizeNet (AIM, ARB) (LGPL License) - http://github.com/PhpPayments/AuthorizeNet
 
 ## Implementing your processor based on this API
@@ -37,7 +35,7 @@ All of the following steps are considered as required to write a proper and as g
 * You have to use set() to set values for the API / processor and validateValues() to check if all required values for a call are present
 * You have to use the Exceptions from the Payments library to encapsulate payment gateway API errors and payment processor issues
 * You have to map the payment statuses from the foreign APIs to the constants of the PaymentStatus class and return them instead the foreign statuses
-* Your processor should not have hard dependencies on anything else if possible
+* Your processor must not have hard dependencies on anything else
 * Use the PaymentApiLog to log payment related messages
 
 Contact us to get your processor reviewed and added to the processor list if it matches the acceptance criterias.
@@ -144,7 +142,7 @@ To pass your custom log object just add it to the config of the processor:
 
 	$yourLogger = $yourLogger;
 	$Processor = new \Payment\Processor\YourProcessor\Processor(array(
-		'logObject' => $yourLogger);
+		'logObject' => $yourLogger));
 
 ## Http Client Adapter
 
@@ -165,6 +163,7 @@ Your custom http adapater object, must implement the Request object and return R
 First get an instance of your payment processor and pass the API configuration.
 
 	$config = array(
+		'sandbox' => true, // by default its false, you don't have to pass that value
 		'apiKey' => 'YOU-API-KEY',
 		'whatEverElse' => 'isNeeded');
 	$Processor = new \Payment\Processor\YourProcessor\Processor($config);

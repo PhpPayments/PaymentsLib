@@ -1,6 +1,7 @@
 <?php
 namespace Payment;
 use \Payment\Exception\MissingFieldException;
+use \Payment\Log\Log;
 
 /**
  * PaymentProcessor
@@ -26,28 +27,28 @@ abstract class PaymentProcessor {
 	 *
 	 * @var string callback url
 	 */
-	public $callbackUrl = '/';
+	public $callbackUrl = '';
 
 	/**
 	 * Return Url
 	 *
 	 * @var string callback url
 	 */
-	public $returnUrl = '/';
+	public $returnUrl = '';
 
 	/**
 	 * Cancel Url
 	 *
 	 * @var string callback url
 	 */
-	public $cancelUrl = '/';
+	public $cancelUrl = '';
 
 	/**
 	 * Finishing page url to display a thank you page or something like that
 	 *
 	 * @var string callback url
 	 */
-	public $finishUrl = '/';
+	public $finishUrl = '';
 
 	/**
 	 * Values to be used by the API implementation

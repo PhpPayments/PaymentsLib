@@ -19,7 +19,7 @@ class ArbResponse extends \Payment\ArbResponse {
 		$this->_subscriptionId = $this->_rawResponse->subscription_id;
 		$this->_response = get_object_vars($this->_rawResponse);
 
-		$this->_status = \Payments\PaymentStatus::ACCEPTED;
+		$this->_status = \Payment\PaymentStatus::ACCEPTED;
 	}
 
 }

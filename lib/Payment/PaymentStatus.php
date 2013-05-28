@@ -20,7 +20,7 @@ class PaymentStatus {
 	const CANCELLED = 'cancelled';
 
 	/**
-	 * Used when a payment was reject, for example a credit card is invalid or expired
+	 * Used when a payment was rejected, for example a credit card is invalid or expired
 	 */
 	const FAILED = 'failed';
 

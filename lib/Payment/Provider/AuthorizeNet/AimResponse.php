@@ -15,9 +15,6 @@ class AimResponse extends \Payment\ApiResponse {
 			throw new \Payment\Exception\PaymentProcessorException('Invalid object passed to the AIM response parser!');
 		}
 
-		//print_r($this->_rawResponse->error);
-		//print_r($this->_rawResponse->error_message);
-
 		$this->_transactionId = $this->_rawResponse->transaction_id;
 		$this->_response = get_object_vars($this->_rawResponse);
 
