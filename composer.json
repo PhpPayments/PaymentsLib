@@ -1,55 +1,52 @@
 {
-    "name":         "PhpPayments/PaymentsLib",
-    "type":         "library",
-    "description":  "PHP5.3 library that provides a payment provider abstraction layer",
-    "keywords":     ["payment", "payment provider", "gateway", "money", "abstraction"],
-    "minimum-stability": "dev",
-    "homepage":     "http://florian-kraemer.net/open-source/php-payments",
-    "license":      "MIT",
-    "authors": [
-        {
-            "name": "Florian Krämer",
-            "homepage": "http://florian-kraemer.net"
-        },
-        {
-            "name":     "The contributors",
-            "homepage": "http://github.com/PhpPayments/PaymentsLib/contributors"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "PhpPayments/SofortProcessor",
-                "version": "master",
-                "source": {
-                    "url":  "git://github.com/PhpPayments/SofortProcessor.git",
-                    "type": "git",
-                    "reference": "master"
-                },
-                "dist": {
-                    "url": "https://github.com/PhpPayments/SofortProcessor/zipball/master",
-                    "type": "zip"
-                }
-            }
-        }
-    ],
-    "require": {
-        "php": ">=5.3.2"
-    },
-    "require-dev": {
-    },
-    "suggest": {
-    },
-    "autoload": {
-        "psr-0": { "PaymentsLib": "lib/" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.2.x-dev"
-        }
-    },
-    "config": {
-        "bin-dir": "bin"
-    }
+	"name":		 "PhpPayments/PaymentsLib",
+	"type":		 "library",
+	"description":  "PHP5.3 library that provides a payment provider abstraction layer",
+	"keywords":	 ["payment", "payment provider", "gateway", "money", "abstraction"],
+	"minimum-stability": "dev",
+	"homepage":	 "http://florian-kraemer.net/open-source/php-payments",
+	"license":	  "MIT",
+	"authors": [
+		{
+			"name": "Florian Krämer",
+			"homepage": "http://florian-kraemer.net"
+		},
+		{
+			"name":	 "The contributors",
+			"homepage": "http://github.com/PhpPayments/PaymentsLib/contributors"
+		}
+	],
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "PhpPayments/SofortProcessor",
+				"version": "master",
+				"source": {
+					"url":  "git://github.com/PhpPayments/SofortProcessor.git",
+					"type": "git",
+					"reference": "master"
+				},
+				"dist": {
+					"url": "https://github.com/PhpPayments/SofortProcessor/zipball/master",
+					"type": "zip"
+				}
+			}
+		}
+	],
+	"require": {
+		"php": ">=5.3.2"
+	},
+	"require-dev": {
+	},
+	"suggest": {
+	},
+	"autoload": {
+		"psr-0": { "PaymentsLib": "lib/" }
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "0.2.x-dev"
+		}
+	}
 }

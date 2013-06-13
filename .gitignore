@@ -2,6 +2,7 @@
 /.settings
 /.pmip
 /vendor/*
+/log/*
 
 .buildpath
 .project
