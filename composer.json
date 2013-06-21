@@ -1,11 +1,11 @@
 {
-	"name":		 "PhpPayments/PaymentsLib",
-	"type":		 "library",
-	"description":  "PHP5.3 library that provides a payment provider abstraction layer",
-	"keywords":	 ["payment", "payment provider", "gateway", "money", "abstraction"],
+	"name":	"PhpPayments/PaymentsLib",
+	"type":	"library",
+	"description": "PHP5.3 library that provides a payment provider abstraction layer",
+	"keywords": ["payment", "payment provider", "gateway", "money", "abstraction"],
 	"minimum-stability": "dev",
-	"homepage":	 "http://florian-kraemer.net/open-source/php-payments",
-	"license":	  "MIT",
+	"homepage": "http://florian-kraemer.net/open-source/php-payments",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Florian Krämer",
