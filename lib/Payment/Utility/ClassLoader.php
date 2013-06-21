@@ -132,7 +132,6 @@ class ClassLoader {
 	public function loadClass($className) {
 		if (null === $this->_namespace || $this->_namespace . $this->_namespaceSeparator === substr($className, 0, strlen($this->_namespace . $this->_namespaceSeparator))) {
 			$fileName = '';
-			$namespace = '';
 			if (false !== ($lastNsPos = strripos($className, $this->_namespaceSeparator))) {
 				$namespace = substr($className, 0, $lastNsPos);
 				$className = substr($className, $lastNsPos + 1);
@@ -140,7 +139,16 @@ class ClassLoader {
 			}
 			$fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $this->_fileExtension;
 
-			require ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+			if (is_string($this->_includePath)) {
+				$this->_includePath = array($this->_includePath);
+			}
+
+			foreach ($this->_includePath as $includePath) {
+				$path = ($includePath !== null ? $includePath . DIRECTORY_SEPARATOR : '') . $fileName;
+				if (is_file($path)) {
+					require $path;
+				}
+			}
 		}
 	}
 
