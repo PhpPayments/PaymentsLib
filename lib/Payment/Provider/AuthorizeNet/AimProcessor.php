@@ -9,7 +9,7 @@ namespace Payment\Provider\AuthorizeNet;
  *
  * @author Florian Krämer
  * @copyright Florian Krämer 2013
- * @license LGPL v3
+ * @license MIT
  */
 class AimProcessor extends \Payment\PaymentProcessor implements \Payment\RecurringPaymentInterface {
 

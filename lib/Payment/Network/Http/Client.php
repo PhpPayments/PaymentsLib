@@ -28,7 +28,7 @@ class Client {
 	 *
 	 * @return void
 	 */
-	public function __construct($config = []) {
+	public function __construct($config = array()) {
 		$this->config($config);
 
 		$adapter = null;

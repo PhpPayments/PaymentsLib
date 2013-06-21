@@ -6,7 +6,7 @@ namespace Payment\Provider\Sofort;
  *
  * @author Florian Krämer
  * @copyright Florian Krämer 2012
- * @license LGPL v3
+ * @license MIT
  */
 class MultiPayProcessor extends \Payment\PaymentProcessor {
 

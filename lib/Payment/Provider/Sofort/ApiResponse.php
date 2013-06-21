@@ -8,7 +8,7 @@ use \Payment\PaymentStatus;
  *
  * @author Florian Krämer
  * @copyright Florian Krämer 2012
- * @license LGPL v3
+ * @license MIT
  */
 class ApiResponse extends \Payment\ApiResponse {
 

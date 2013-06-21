@@ -379,7 +379,7 @@ abstract class PaymentProcessor {
 	 * @return void
 	 * @throws \Payment\Exception\PaymentProcessorException
 	 */
-	protected function _configure(array $config = []) {
+	protected function _configure(array $config = array()) {
 		$this->_validateConfig($config);
 
 		if (!isset($config['sandbox'])) {
