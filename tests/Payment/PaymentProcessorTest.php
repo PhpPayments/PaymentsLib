@@ -1,6 +1,6 @@
 <?php
 /**
- * BasePaymentProcessorTest
+ * TestPaymentProcessor
  *
  * @author Florian Krämer
  * @copyright 2013 Florian Krämer
@@ -26,7 +26,34 @@ class TestPaymentProcessor extends \Payment\PaymentProcessor {
 
 }
 
+/**
+ * BasePaymentProcessorTest
+ *
+ * @author Florian Krämer
+ * @copyright 2013 Florian Krämer
+ * @license MIT
+ */
 class BasePaymentProcessorTest extends \PHPUnit_Framework_TestCase {
+
+	/**
+	 * setUp
+	 *
+	 * @return void
+	 */
+	public function setUp() {
+		parent::setUp();
+
+	}
+
+	/**
+	 * tearDown
+	 *
+	 * @return void
+	 */
+	public function tearDown() {
+		parent::tearDown();
+
+	}
 
 	public function testField() {
 		$Processor = new \TestPaymentProcessor(array());
