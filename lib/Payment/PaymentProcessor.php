@@ -58,7 +58,7 @@ abstract class PaymentProcessor {
 	 *
 	 * @var array
 	 */
-	protected $_fields = array(
+	protected $_fieldValidation = array(
 		'pay' => array(
 			'amount' => array(
 				'required' => true,
@@ -72,6 +72,11 @@ abstract class PaymentProcessor {
 			),
 		),
 	);
+
+	/**
+	 *
+	 */
+	protected $_fields = array();
 
 	/**
 	 * Sandbox mode
@@ -236,8 +241,7 @@ abstract class PaymentProcessor {
 	 */
 	public function field($field, $options = array()) {
 		$defaultOptions = array(
-			'required' => false,
-			'default' => null);
+			'required' => false);
 
 		$options = array_merge($defaultOptions, $options);
 
@@ -246,9 +250,11 @@ abstract class PaymentProcessor {
 				throw new \Payment\Exception\MissingFieldException(sprintf('Required value %s is not set!', $field));
 			}
 
-			if ($options['default'] !== null) {
+			if (isset($options['default'])) {
 				return $options['default'];
 			}
+
+			throw new \Payment\Exception\MissingFieldException(sprintf('If the field %s is not set a default value must be specified!', $field));
 		}
 
 		return $this->_fields[$field];
@@ -266,8 +272,8 @@ abstract class PaymentProcessor {
 	 * @return boolean
 	 */
 	public function validateFields($action) {
-		if (isset($this->_fields[$action])) {
-			foreach($this->_fields[$action] as $field => $options) {
+		if (isset($this->_fieldValidation[$action])) {
+			foreach($this->_fieldValidation[$action] as $field => $options) {
 				if (isset($options['required']) && $options['required'] === true) {
 					if (!isset($this->_fields[$field])) {
 						throw new \Payment\Exception\PaymentProcessorException(sprintf('Required value %s is not set!', $field));

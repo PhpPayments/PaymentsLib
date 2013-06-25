@@ -8,6 +8,21 @@
  */
 class TestPaymentProcessor extends \Payment\PaymentProcessor {
 
+	protected $_fieldValidation = array(
+		'pay' => array(
+			'amount' => array(
+				'required' => true,
+				'type' => array('integer', 'float')
+			),
+		),
+		'refund' => array(
+			'amount' => array(
+				'required' => false,
+				'type' => array('integer', 'float')
+			),
+		),
+	);
+
 	public function pay($amount, array $options = array()) {
 
 	}
@@ -33,7 +48,7 @@ class TestPaymentProcessor extends \Payment\PaymentProcessor {
  * @copyright 2013 Florian Krämer
  * @license MIT
  */
-class BasePaymentProcessorTest extends \PHPUnit_Framework_TestCase {
+class PaymentProcessorTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * setUp
@@ -55,9 +70,42 @@ class BasePaymentProcessorTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
+	/**
+	 * testField
+	 *
+	 * @return void
+	 */
 	public function testField() {
 		$Processor = new \TestPaymentProcessor(array());
-		$Processor->field('test');
+		$result = $Processor->field('foo', array('default' => 'bar'));
+		$this->assertEquals($result, 'bar');
+
+		$Processor->set('bar', 'foo');
+		$result = $Processor->field('bar');
+		$this->assertEquals($result, 'foo');
+	}
+
+	/**
+	 * testValidateFields
+	 *
+	 * @return void
+	 * @expectedException \Payment\Exception\PaymentProcessorException
+	 */
+	public function testValidateFieldsExceptionFieldNotSet() {
+		$Processor = new \TestPaymentProcessor(array());
+		$Processor->validateFields('pay');
+	}
+
+	/**
+	 * testValidateFields
+	 *
+	 * @return void
+	 * @expectedException \Payment\Exception\PaymentProcessorException
+	 */
+	public function testValidateFieldsExceptionInvalidFieldValue() {
+		$Processor = new \TestPaymentProcessor(array());
+		$Processor->set('amount', 'no string!');
+		$Processor->validateFields('pay');
 	}
 
 }
